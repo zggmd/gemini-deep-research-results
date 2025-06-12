@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息图：玻璃的真实状态</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #F8F9FA;
+            color: #212529;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flowchart-step {
+            background-color: #FFFFFF;
+            border: 2px solid #00A9E0;
+            color: #212529;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            flex-grow: 1;
+        }
+        .flowchart-arrow {
+            color: #00A9E0;
+            font-size: 2.5rem;
+            line-height: 1;
+            font-weight: bold;
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            text-align: center;
+        }
+        .energetic-blue { color: #00A9E0; }
+        .energetic-orange { color: #F7A823; }
+        .energetic-green { color: #43B02A; }
+        .energetic-red-orange { color: #F05A28; }
+        .energetic-purple { color: #93278F; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center my-8 md:my-16">
+            <h1 class="text-4xl md:text-6xl font-bold energetic-blue mb-4">玻璃：是固体还是液体？</h1>
+            <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-600">
+                一个流传已久的科学谜题。本信息图将基于深度研究，为您揭示玻璃独特的物质状态，超越简单的分类。
+            </p>
+        </header>
+
+        <main class="space-y-12 md:space-y-20">
+
+            <section id="states-of-matter">
+                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-bold text-center mb-2 energetic-purple">物质状态的基础</h2>
+                    <p class="text-center text-gray-600 mb-8">要理解玻璃，我们首先要明确传统物质状态的定义。它们的核心区别在于原子排列和分子运动。</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-max text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="p-4 font-bold border-b-2 border-gray-200">特性</th>
+                                    <th class="p-4 font-bold border-b-2 border-gray-200">晶体固体</th>
+                                    <th class="p-4 font-bold border-b-2 border-gray-200">液体</th>
+                                    <th class="p-4 font-bold border-b-2 border-gray-200">气体</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-4 border-b border-gray-200 font-semibold">原子排列</td>
+                                    <td class="p-4 border-b border-gray-200">有序/规则 (长程有序)</td>
+                                    <td class="p-4 border-b border-gray-200">随机/无序 (短程有序)</td>
+                                    <td class="p-4 border-b border-gray-200">随机/无序 (间距大)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-4 border-b border-gray-200 font-semibold">分子运动</td>
+                                    <td class="p-4 border-b border-gray-200">原地振动</td>
+                                    <td class="p-4 border-b border-gray-200">相互流动/滑动</td>
+                                    <td class="p-4 border-b border-gray-200">快速/自由运动</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-4 border-b border-gray-200 font-semibold">形状</td>
+                                    <td class="p-4 border-b border-gray-200">固定</td>
+                                    <td class="p-4 border-b border-gray-200">不定 (适应容器)</td>
+                                    <td class="p-4 border-b border-gray-200">不定 (适应容器)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-4 border-b border-gray-200 font-semibold">体积</td>
+                                    <td class="p-4 border-b border-gray-200">固定</td>
+                                    <td class="p-4 border-b border-gray-200">固定</td>
+                                    <td class="p-4 border-b border-gray-200">不定 (充满容器)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="myth-debunked">
+                <h2 class="text-3xl font-bold text-center mb-8 energetic-red-orange">揭穿世纪迷思：流动的玻璃窗？</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="stat-card">
+                        <span class="text-6xl mb-4 block">🏛️</span>
+                        <h3 class="text-2xl font-bold mb-2">流行的误解</h3>
+                        <p class="text-gray-600">许多人相信，古老教堂的窗玻璃底部更厚，是因为玻璃在几百年间像超高粘度的液体一样向下流动了。</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-7xl font-bold energetic-blue mb-4">~1 nm</p>
+                        <h3 class="text-2xl font-bold mb-2">科学的计算</h3>
+                        <p class="text-gray-600">科学计算和实验证明，室温下玻璃的流动微乎其微。在<span class="font-bold">十亿年</span>内，其最大流动距离仅约1纳米。厚度不均源于古老的制造工艺。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="true-nature">
+                <h2 class="text-3xl font-bold text-center mb-8 energetic-green">玻璃的真正本质：无定形固体</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                         <h3 class="text-2xl font-bold text-center mb-4">玻璃的形成之路</h3>
+                         <p class="text-center text-gray-600 mb-6">玻璃并非通过结晶形成，而是通过将液体快速冷却，使其原子来不及排列成有序晶格而被“冻结”在无序状态。</p>
+                        <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="flowchart-step">高温液态</div>
+                            <div class="flowchart-arrow transform md:rotate-0 rotate-90">&rarr;</div>
+                            <div class="flowchart-step">快速冷却</div>
+                            <div class="flowchart-arrow transform md:rotate-0 rotate-90">&rarr;</div>
+                            <div class="flowchart-step">玻璃化转变</div>
+                            <div class="flowchart-arrow transform md:rotate-0 rotate-90">&rarr;</div>
+                            <div class="flowchart-step">无定形固体</div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                        <h3 class="text-2xl font-bold text-center mb-4">一种双重身份的物质</h3>
+                        <p class="text-center text-gray-600 mb-6">玻璃同时拥有液体的无序结构和固体的宏观刚性，这使其成为一种独特的物质状态。</p>
+                        <div class="chart-container h-64 md:h-80">
+                            <canvas id="glassIdentityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="glass-family">
+                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-bold text-center mb-2 energetic-orange">玻璃材料大家族</h2>
+                    <p class="text-center text-gray-600 mb-8">"玻璃"并非单一材料，而是一大类具有无定形结构的材料，应用领域极其广泛。</p>
+                    <div class="chart-container h-96 md:h-[450px]">
+                        <canvas id="glassFamilyChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="conclusion">
+                <div class="bg-gradient-to-r from-[#00A9E0] to-[#93278F] rounded-lg shadow-xl p-8 md:p-12 text-white">
+                    <h2 class="text-4xl font-bold text-center mb-6">最终结论</h2>
+                    <p class="text-center text-2xl font-bold mb-8">玻璃是一种 <span class="bg-white text-[#212529] px-2 py-1 rounded">无定形固体</span></p>
+                    <div class="max-w-2xl mx-auto text-lg space-y-4">
+                        <p><span class="font-bold text-2xl mr-2">✅</span> <strong class="font-semibold">原子结构:</strong> 拥有类似液体的无序排列，但原子被“冻结”在固定位置。</p>
+                        <p><span class="font-bold text-2xl mr-2">✅</span> <strong class="font-semibold">机械行为:</strong> 在人类可感知的时间尺度上，表现为刚性固体，保持固定形状。</p>
+                        <p><span class="font-bold text-2xl mr-2">✅</span> <strong class="font-semibold">流动性:</strong> 室温下无肉眼可见的流动，流动速率在亿万年尺度上才可计算。</p>
+                        <p><span class="font-bold text-2xl mr-2">✅</span> <strong class="font-semibold">相变:</strong> 不存在固定的熔点，而是在一个温度范围内经历“玻璃化转变”。</p>
+                        <p><span class="font-bold text-2xl mr-2">✅</span> <strong class="font-semibold">平衡状态:</strong> 属于非平衡的亚稳态，会以极其缓慢的速度向更稳定的晶体状态弛豫。</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-12 md:mt-20 py-6 border-t border-gray-200">
+            <p class="text-gray-500">信息图由AI根据深度研究报告生成</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const energeticPalette = {
+            blue: '#00A9E0',
+            orange: '#F7A823',
+            green: '#43B02A',
+            redOrange: '#F05A28',
+            purple: '#93278F'
+        };
+
+        function wrapLabel(str, maxWidth) {
+            if (str.length <= maxWidth) {
+                return str;
+            }
+            const words = str.split('');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > maxWidth) {
+                    lines.push(currentLine);
+                    currentLine = '';
+                }
+                currentLine += word;
+            });
+            lines.push(currentLine);
+            return lines;
+        }
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join('');
+            } else {
+                return label;
+            }
+        };
+
+        const defaultChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#212529',
+                        font: {
+                            size: 14,
+                            family: "'Noto Sans SC', sans-serif"
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    bodyFont: {
+                        family: "'Noto Sans SC', sans-serif"
+                    },
+                    titleFont: {
+                        family: "'Noto Sans SC', sans-serif"
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: '#212529',
+                        font: {
+                            family: "'Noto Sans SC', sans-serif"
+                        }
+                    },
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: '#212529',
+                        font: {
+                            family: "'Noto Sans SC', sans-serif"
+                        }
+                    },
+                    grid: {
+                       color: '#E5E7EB'
+                    }
+                }
+            }
+        };
+
+        const glassIdentityCtx = document.getElementById('glassIdentityChart').getContext('2d');
+        new Chart(glassIdentityCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['无序原子结构 (类液态)', '宏观刚性 (类固态)'],
+                datasets: [{
+                    label: '玻璃的双重身份',
+                    data: [50, 50],
+                    backgroundColor: [energeticPalette.blue, energeticPalette.purple],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 4,
+                }]
+            },
+            options: {
+                 ...defaultChartOptions,
+                 scales: { x: { display: false }, y: { display: false } },
+                 cutout: '60%'
+            }
+        });
+
+        const glassFamilyCtx = document.getElementById('glassFamilyChart').getContext('2d');
+        const rawLabels = [
+            '氧化物/非氧化物玻璃',
+            '无定形聚合物 (如PMMA)',
+            '金属玻璃 (无定形金属)',
+            '金属有机/杂化玻璃',
+            '玻璃陶瓷'
+        ];
+        new Chart(glassFamilyCtx, {
+            type: 'bar',
+            data: {
+                labels: rawLabels.map(label => wrapLabel(label, 16)),
+                datasets: [{
+                    label: '技术应用广度指数',
+                    data: [9, 8, 8.5, 7, 9.5],
+                    backgroundColor: [
+                        energeticPalette.blue,
+                        energeticPalette.orange,
+                        energeticPalette.green,
+                        energeticPalette.redOrange,
+                        energeticPalette.purple
+                    ],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                indexAxis: 'y',
+                 scales: {
+                    x: {
+                        ...defaultChartOptions.scales.x,
+                        grid: { color: '#E5E7EB' }
+                    },
+                    y: {
+                        ...defaultChartOptions.scales.y,
+                        grid: { display: false }
+                    }
+                 }
+            }
+        });
+
+    </script>
+</body>
+</html>
