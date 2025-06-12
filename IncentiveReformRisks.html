@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPIP 2.0 绩效激励改革风险交互式解读</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: The application is designed as an interactive risk analysis report, breaking down the complex SPIP 2.0 plan into thematic risk areas rather than following the document's structure. The user flow starts with an executive summary, then moves through four key risk sections: 1) Annual Performance "Cliff" Risk, 2) Competition & "Wartime" Culture Risk, 3) Long-Term Incentive & Market Volatility Risk, and 4) A summary of recommendations. This structure directly addresses the user's query about "pitfalls" (有没有坑) by prioritizing risk analysis and providing a clear, logical path for users to understand the personal and organizational implications. Interactive charts and diagrams are used to make abstract concepts like the "95% cliff" immediately tangible and understandable. -->
+    <!-- Visualization & Content Choices: 1. Annual Incentive: The "95% cliff" is visualized with a Chart.js bar chart to starkly show the all-or-nothing payout, a critical risk. 2. Labor Competition: A pure HTML/CSS flow diagram illustrates the potential negative cultural cycle from "wartime" pressure, making the abstract concept of burnout and unhealthy competition visible. 3. Long-Term Incentive: A Chart.js donut chart shows the proportion of incentive value dependent on uncontrollable market factors, highlighting the external risk. Each choice is interactive (hover/click) and justified by its ability to clarify a specific, high-impact "pitfall" for employees. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #F8F9FA;
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #1E40AF;
+            border-bottom-color: #1E40AF;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .icon-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .flow-diagram-arrow {
+            position: relative;
+            padding: 0 20px;
+        }
+        .flow-diagram-arrow::after {
+            content: '→';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #9CA3AF;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl font-bold text-blue-900">SPIP 2.0</span>
+                    <span class="text-xl font-light text-gray-600">| 风险交互式解读</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#summary" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">核心摘要</a>
+                    <a href="#annual" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">年度绩效风险</a>
+                    <a href="#competition" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">竞赛文化风险</a>
+                    <a href="#longterm" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">长期激励风险</a>
+                    <a href="#recommendations" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">综合建议</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-button" class="text-gray-500 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden pb-4">
+                <a href="#summary" class="block nav-link px-3 py-2 text-base font-medium text-gray-600">核心摘要</a>
+                <a href="#annual" class="block nav-link px-3 py-2 text-base font-medium text-gray-600">年度绩效风险</a>
+                <a href="#competition" class="block nav-link px-3 py-2 text-base font-medium text-gray-600">竞赛文化风险</a>
+                <a href="#longterm" class="block nav-link px-3 py-2 text-base font-medium text-gray-600">长期激励风险</a>
+                <a href="#recommendations" class="block nav-link px-3 py-2 text-base font-medium text-gray-600">综合建议</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="summary" class="mb-16">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">洞察激励背后的风险</h1>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">本应用旨在深度解析世纪互联SPIP 2.0绩效与激励方案，揭示其中潜在的挑战与“陷阱”，助您更全面地理解新政。 </p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <div class="icon-box bg-red-100 text-red-600 mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">“悬崖式”负激励</h3>
+                    <p class="text-sm text-gray-500">年度绩效“低于95%清零”的极端规则，可能抑制创新，鼓励短期行为。</p>
+                </div>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <div class="icon-box bg-yellow-100 text-yellow-600 mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">“战时”文化压力</h3>
+                    <p class="text-sm text-gray-500">“劳动竞赛”的高压氛围，可能引发恶性竞争与员工倦怠，形成内耗。</p>
+                </div>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <div class="icon-box bg-blue-100 text-blue-600 mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">外部市场不确定性</h3>
+                    <p class="text-sm text-gray-500">长期激励与资本市场强绑定，个人努力外的不可控风险巨大。</p>
+                </div>
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <div class="icon-box bg-green-100 text-green-600 mb-4">
+                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">主观性考核标准</h3>
+                    <p class="text-sm text-gray-500">班子建设中“讲政治”等模糊要求，可能影响人才选拔的公平性。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="annual" class="mb-16 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">年度绩效风险：一步之遥，万丈深渊</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">本节深入剖析年度绩效考核中的核心风险点——“95%及格线”。通过交互式图表，您能直观看到这一规则如何形成“悬崖式”的激励断层，并理解其可能引发的潜在“陷阱”。</p>
+            </div>
+            <div class="grid lg:grid-cols-5 gap-8 items-center">
+                <div class="lg:col-span-3 card p-6">
+                     <div class="chart-container">
+                        <canvas id="annualIncentiveChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs text-gray-500 mt-2">将鼠标悬停在图表条柱上查看具体奖金系数</p>
+                </div>
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="flex items-start">
+                        <div class="icon-box bg-red-100 text-red-600 mr-4">
+                           <span class="font-bold text-lg">!</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">“95%悬崖”效应</h4>
+                            <p class="text-sm text-gray-600">完成94%与完成95%目标的奖金结果天差地别。这种“全有或全无”的模式是整个激励方案中风险最高的部分。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="icon-box bg-yellow-100 text-yellow-600 mr-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">扼杀创新与挑战</h4>
+                            <p class="text-sm text-gray-600">为求稳妥“过线”，团队可能避免高风险、高回报的创新项目，选择易于达成但价值不大的保守目标。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="icon-box bg-blue-100 text-blue-600 mr-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">催生短期行为</h4>
+                            <p class="text-sm text-gray-600">年底为冲刺95%，可能会采取损害长期利益的短期措施，甚至可能出现数据美化或造假现象。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competition" class="mb-16 scroll-mt-20">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">竞赛文化风险：“战时状态”下的组织内耗</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">劳动竞赛动员令中“全员进入战时状态”、“此战无退路”等措辞，意在激发斗志。但这种高压文化若引导不当，极易催生不健康的内部竞争，形成恶性循环。</p>
+            </div>
+            <div class="card p-8">
+                <h3 class="text-xl font-semibold text-center mb-8">“赶超比拼”的潜在负面循环</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4 overflow-x-auto pb-4">
+                    <div class="text-center p-4 bg-gray-50 rounded-lg flex-shrink-0 w-48">
+                        <div class="text-3xl mb-2">🔥</div>
+                        <h4 class="font-semibold">高压动员</h4>
+                        <p class="text-xs text-gray-500">“战时状态”激发短期斗志</p>
+                    </div>
+                    <div class="flow-diagram-arrow hidden md:block"></div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg flex-shrink-0 w-48">
+                        <div class="text-3xl mb-2">⚔️</div>
+                        <h4 class="font-semibold">零和博弈</h4>
+                        <p class="text-xs text-gray-500">有限奖项引发恶性竞争</p>
+                    </div>
+                    <div class="flow-diagram-arrow hidden md:block"></div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg flex-shrink-0 w-48">
+                        <div class="text-3xl mb-2">🧱</div>
+                        <h4 class="font-semibold">信息壁垒</h4>
+                        <p class="text-xs text-gray-500">团队各自为战，不愿分享</p>
+                    </div>
+                    <div class="flow-diagram-arrow hidden md:block"></div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg flex-shrink-0 w-48">
+                        <div class="text-3xl mb-2">😩</div>
+                        <h4 class="font-semibold">团队倦怠</h4>
+                        <p class="text-xs text-gray-500">长期高压导致精力耗尽</p>
+                    </div>
+                     <div class="flow-diagram-arrow hidden md:block"></div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg flex-shrink-0 w-48">
+                        <div class="text-3xl mb-2">🚶‍♂️</div>
+                        <h4 class="font-semibold">人才流失</h4>
+                        <p class="text-xs text-gray-500">优秀员工寻求更健康环境</p>
+                    </div>
+                </div>
+                <p class="text-sm text-center mt-6 text-gray-600">这种循环将组织精力从外部市场转向内部竞争，形成“内卷”，与集团“群体智能联合体”的愿景背道而驰。</p>
+            </div>
+        </section>
+
+        <section id="longterm" class="mb-16 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">长期激励风险：失控的未来，谁来买单？</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">中长期激励（股权、GP-LP模式）与资本市场表现深度绑定，这意味着您的长期回报，有相当一部分取决于您无法控制的外部市场环境。</p>
+            </div>
+             <div class="grid lg:grid-cols-5 gap-8 items-center">
+                <div class="lg:col-span-3 card p-6">
+                    <div class="chart-container">
+                        <canvas id="longTermIncentiveChart"></canvas>
+                    </div>
+                     <p class="text-center text-xs text-gray-500 mt-2">图表模拟了影响您长期激励价值的因素构成</p>
+                </div>
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="flex items-start">
+                        <div class="icon-box bg-blue-100 text-blue-600 mr-4">
+                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h1a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.938 6.126a9 9 0 11-2.864 10.388M14 21a9 9 0 10-10.388-2.864"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">市场波动风险</h4>
+                            <p class="text-sm text-gray-600">即使您和团队超额完成所有业务目标，宏观经济下行、行业政策变化或市场情绪低迷都可能导致估值缩水，激励价值大打折扣。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="icon-box bg-yellow-100 text-yellow-600 mr-4">
+                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.546-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">“募投管退”不确定性</h4>
+                            <p class="text-sm text-gray-600">对于采用GP-LP模式的小互联，“募资”被设为及格线，但募资成功与否高度依赖市场环境，团队需承担超出控制范围的巨大风险。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                         <div class="icon-box bg-red-100 text-red-600 mr-4">
+                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">潜在利益冲突</h4>
+                            <p class="text-sm text-gray-600">GP-LP模式中，管理团队（GP）可能优先考虑自身利益最大化，在投资决策和退出时机上与集团或LP的长期利益产生冲突。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommendations" class="scroll-mt-20">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">综合评估与规避建议</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">面对复杂的激励体系，理解风险是第一步。以下建议旨在帮助您和团队更好地应对挑战，并向管理层提出建设性意见。</p>
+            </div>
+            <div class="space-y-4">
+                <div class="card p-6">
+                    <details>
+                        <summary class="font-semibold text-lg cursor-pointer flex justify-between items-center">
+                            <span>优化负激励机制，平衡风险与回报</span>
+                            <span class="transform transition-transform duration-300">+</span>
+                        </summary>
+                        <p class="text-gray-600 mt-4 text-sm leading-relaxed">**对员工**：清晰识别哪些绩效目标是可控的，哪些受外部影响大。对于不可控目标，应尽早与上级沟通风险，并以书面形式记录。**对管理层**：建议取消“95%清零”的极端规则，改为更平滑的阶梯式扣减。引入过程性奖励，而非单一结果导向，以鼓励创新和承担合理风险。</p>
+                    </details>
+                </div>
+                 <div class="card p-6">
+                    <details>
+                        <summary class="font-semibold text-lg cursor-pointer flex justify-between items-center">
+                            <span>促进健康竞争，而非组织内耗</span>
+                            <span class="transform transition-transform duration-300">+</span>
+                        </summary>
+                        <p class="text-gray-600 mt-4 text-sm leading-relaxed">**对员工**：主动发起跨团队协作，将竞争转化为合作共赢。在追求个人和团队荣誉时，坚守信息共享和互相支持的底线。**对管理层**：调整“劳动竞赛”的宣传基调，从“战斗”转向“协同创新”。增加跨团队协作类奖项的比重，在评比中更看重过程、创新及对集团整体的贡献，而非单一的KPI排名。</p>
+                    </details>
+                </div>
+                 <div class="card p-6">
+                    <details>
+                        <summary class="font-semibold text-lg cursor-pointer flex justify-between items-center">
+                            <span>强化风险意识，管理外部不确定性</span>
+                            <span class="transform transition-transform duration-300">+</span>
+                        </summary>
+                        <p class="text-gray-600 mt-4 text-sm leading-relaxed">**对员工**：深入了解与自己长期激励相关的资本市场知识，理性看待预期收益，做好多元化的个人财务规划。**对管理层**：为受市场影响大的指标（如融资）设置更具弹性的考核标准，或将其作为加分项。建立外部风险预警机制，并为小互联提供集团层面的资源支持（如融资协调、政策解读），而非将风险完全下放。</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-white mt-16 border-t">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+            <p>本应用基于公开文档进行分析解读，仅供内部参考，不构成任何决策建议。</p>
+            <p>&copy; 2025 绩效改革风险分析小组</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('.nav-link, #mobile-menu a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if(mobileMenu.contains(e.target)) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement){
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            document.querySelectorAll('details').forEach((detail) => {
+                detail.addEventListener('toggle', (event) => {
+                    const summary = detail.querySelector('summary');
+                    const icon = summary.querySelector('span:last-child');
+                    if (detail.open) {
+                        icon.textContent = '-';
+                        icon.classList.add('rotate-90');
+                    } else {
+                        icon.textContent = '+';
+                        icon.classList.remove('rotate-90');
+                    }
+                });
+            });
+
+            const annualCtx = document.getElementById('annualIncentiveChart').getContext('2d');
+            new Chart(annualCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['<90%', '92%', '94%', '95%', '100%', '110%'],
+                    datasets: [{
+                        label: '奖金系数',
+                        data: [0, 0, 0, 1, 1.2, 1.5],
+                        backgroundColor: (context) => {
+                            const value = context.raw;
+                            if (value === 0) return 'rgba(239, 68, 68, 0.6)';
+                            if (value === 1) return 'rgba(59, 130, 246, 0.6)';
+                            return 'rgba(22, 163, 74, 0.6)';
+                        },
+                        borderColor: (context) => {
+                             const value = context.raw;
+                            if (value === 0) return 'rgba(239, 68, 68, 1)';
+                            if (value === 1) return 'rgba(59, 130, 246, 1)';
+                            return 'rgba(22, 163, 74, 1)';
+                        },
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '年度绩效完成率 vs 奖金系数',
+                            font: { size: 16, family: "'Noto Sans SC', sans-serif" },
+                            color: '#374151'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        if (context.parsed.y === 0) {
+                                            label += '清零';
+                                        } else {
+                                            label += `${context.parsed.y * 100}%`;
+                                        }
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '奖金系数'
+                            },
+                             ticks: {
+                                callback: function(value) {
+                                    return value * 100 + '%';
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '年度绩效目标完成率'
+                            }
+                        }
+                    }
+                }
+            });
+
+            const longTermCtx = document.getElementById('longTermIncentiveChart').getContext('2d');
+            new Chart(longTermCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['个人与团队努力 (可控)', '资本市场表现 (不可控)', '公司整体战略与融资 (部分可控)'],
+                    datasets: [{
+                        data: [40, 45, 15],
+                        backgroundColor: [
+                            'rgba(34, 197, 94, 0.7)',
+                            'rgba(239, 68, 68, 0.7)',
+                            'rgba(251, 191, 36, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(22, 163, 74, 1)',
+                            'rgba(220, 38, 38, 1)',
+                            'rgba(245, 158, 11, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '长期激励价值影响因素构成（模拟）',
+                            font: { size: 16, family: "'Noto Sans SC', sans-serif" },
+                            color: '#374151'
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: "'Noto Sans SC', sans-serif"
+                                }
+                            }
+                        },
+                         tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
