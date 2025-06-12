@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中医“上火”与“湿气重”：现代科学信息图</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!--
+    Narrative & Structure Plan:
+    1.  Introduction: Introduce "Shang Huo" and "Shi Qi Zhong" as prevalent TCM concepts for sub-health.
+    2.  Section - "Shang Huo" (The Fire Within): Define, show types (Heart, Liver, etc.) with HTML cards, visualize causes with icons, and bridge to modern science (inflammation). Display biomarker changes with a Chart.js bar chart.
+    3.  Section - "Shi Qi Zhong" (The Internal Dampness): Define, explain spleen's role, show types with an HTML/CSS flowchart, and bridge to modern science (metabolic issues, gut health). Use a Chart.js radar chart for biomarker connections.
+    4.  Section - Interplay: Create an HTML/CSS diagram to show how the two concepts can interact (e.g., Damp-Heat).
+    5.  Section - Comparative View: An HTML table comparing TCM vs. Modern Science perspectives.
+    6.  Conclusion: Summarize the integration of knowledge and future outlook.
+
+    Visualization Selection Plan:
+    -   Key Concepts: Large text and descriptive paragraphs. Goal: Inform. Method: HTML/CSS.
+    -   Types of "Fire": Grid of styled cards. Goal: Organize. Method: HTML/CSS with Unicode icons. NO SVG.
+    -   Causes of "Fire": Flexbox with Unicode icons. Goal: Compare. Method: HTML/CSS. NO SVG.
+    -   "Shang Huo" Biomarkers: Grouped Bar Chart. Goal: Compare/Change. Method: Chart.js/Canvas. NO SVG.
+    -   Types of "Dampness": Flowchart. Goal: Organize. Method: HTML/CSS with borders and flexbox. NO SVG/Mermaid JS.
+    -   "Shi Qi Zhong" Biomarkers: Radar Chart. Goal: Relationships. Method: Chart.js/Canvas. NO SVG.
+    -   Interaction Diagram: Flowchart. Goal: Organize/Relationships. Method: HTML/CSS. NO SVG/Mermaid JS.
+    -   TCM vs. Modern Science: Table. Goal: Compare. Method: HTML/CSS. NO SVG.
+    -   All charts will use Chart.js on Canvas, be responsive, and include required label wrapping and tooltip configurations.
+
+    Color Palette: Energetic & Playful (#00A6FB, #DC0073, #FBB03B, #00F0B5)
+
+    Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output.
+    -->
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .text-energetic-blue { color: #00A6FB; }
+        .bg-energetic-blue { background-color: #00A6FB; }
+        .border-energetic-blue { border-color: #00A6FB; }
+        .text-energetic-magenta { color: #DC0073; }
+        .bg-energetic-magenta { background-color: #DC0073; }
+        .border-energetic-magenta { border-color: #DC0073; }
+        .text-energetic-yellow { color: #FBB03B; }
+        .bg-energetic-yellow { background-color: #FBB03B; }
+        .border-energetic-yellow { border-color: #FBB03B; }
+        .text-energetic-teal { color: #00F0B5; }
+        .bg-energetic-teal { background-color: #00F0B5; }
+        .border-energetic-teal { border-color: #00F0B5; }
+
+        .flow-line {
+            position: relative;
+            border-left: 2px dashed #FBB03B;
+        }
+        .flow-line::after {
+            content: '▼';
+            position: absolute;
+            left: -11px;
+            bottom: -5px;
+            color: #FBB03B;
+            font-size: 1.25rem;
+        }
+        .flow-box {
+            border: 2px solid;
+            transition: all 0.3s ease;
+        }
+        .flow-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-energetic-blue mb-2">解码中医智慧</h1>
+            <h2 class="text-2xl md:text-3xl font-semibold text-gray-700">“上火”与“湿气重”的现代科学透视</h2>
+            <p class="mt-4 max-w-3xl mx-auto text-gray-600 text-lg">“上火”和“湿气重”是中医学中描述身体失衡状态的两个核心概念。本报告将传统智慧与现代科学相结合，通过数据可视化，揭示这些古老概念背后的生理学意义。</p>
+        </header>
+
+        <main class="space-y-12">
+
+            <section id="shanghuo">
+                <div class="text-center mb-8">
+                    <h3 class="text-3xl font-bold text-energetic-magenta">第一章：解析“上火”——体内的“火”与“热”</h3>
+                    <p class="mt-2 max-w-3xl mx-auto text-gray-600">在中医理论中，“上火”描述了人体阴阳失衡，阳气过盛或阴液不足导致的热性症状。这不仅是民间俗语，更是一套复杂的证候分类，与现代医学的炎症反应和应激状态密切相关。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h4 class="text-xl font-bold mb-4 flex items-center"><span class="text-2xl mr-3">🔥</span>“上火”的常见诱因</h4>
+                        <p class="text-gray-600 mb-6">多种生活方式和环境因素会打破身体的平衡，点燃体内的“火气”。</p>
+                        <div class="space-y-4 text-lg">
+                            <div class="flex items-center"><span class="text-2xl w-8 text-center">🌶️</span><span class="ml-3"><b>饮食因素:</b> 过食辛辣、煎炸、高糖食物。</span></div>
+                            <div class="flex items-center"><span class="text-2xl w-8 text-center">😩</span><span class="ml-3"><b>情绪压力:</b> 长期精神紧张、焦虑、易怒。</span></div>
+                            <div class="flex items-center"><span class="text-2xl w-8 text-center">😴</span><span class="ml-3"><b>生活习惯:</b> 熬夜、缺乏睡眠、过度劳累。</span></div>
+                            <div class="flex items-center"><span class="text-2xl w-8 text-center">☀️</span><span class="ml-3"><b>环境因素:</b> 气候干燥或持续湿热。</span></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h4 class="text-xl font-bold mb-4 flex items-center"><span class="text-2xl mr-3">🔬</span>现代科学视角：炎症与应激</h4>
+                        <p class="text-gray-600 mb-4">“上火”的症状，如红、肿、热、痛，与现代医学的炎症过程高度吻合。研究表明，“上火”状态下，机体的免疫系统、神经内分泌系统均发生显著变化，并伴有氧化应激水平的增强。</p>
+                        <div class="chart-container">
+                            <canvas id="shanghuoBiomarkersChart"></canvas>
+                        </div>
+                         <p class="text-center text-sm text-gray-500 mt-2">图1：”上火“状态下关键生物标志物变化示意图</p>
+                    </div>
+
+                    <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+                         <h4 class="text-xl font-bold mb-4 text-center"><span class="text-2xl mr-3">❤️‍🔥</span>五脏之火：不同类型的“上火”及其表现</h4>
+                         <p class="text-gray-600 mb-6 text-center max-w-2xl mx-auto">根据影响的脏腑不同，“火”可分为不同类型，各有其独特的症状表现。</p>
+                        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 text-center">
+                            <div class="border-2 border-energetic-magenta/50 rounded-lg p-4">
+                                <p class="text-4xl">❤️</p>
+                                <h5 class="font-bold mt-2 text-energetic-magenta">心火</h5>
+                                <p class="text-sm text-gray-600 mt-1">口舌生疮、心烦、失眠</p>
+                            </div>
+                            <div class="border-2 border-energetic-teal/50 rounded-lg p-4">
+                                <p class="text-4xl">🌿</p>
+                                <h5 class="font-bold mt-2 text-energetic-teal">肝火</h5>
+                                <p class="text-sm text-gray-600 mt-1">头痛目赤、急躁易怒</p>
+                            </div>
+                            <div class="border-2 border-gray-400/50 rounded-lg p-4">
+                                <p class="text-4xl">💨</p>
+                                <h5 class="font-bold mt-2 text-gray-500">肺火</h5>
+                                <p class="text-sm text-gray-600 mt-1">咽喉肿痛、干咳</p>
+                            </div>
+                            <div class="border-2 border-energetic-yellow/50 rounded-lg p-4">
+                                <p class="text-4xl">🍔</p>
+                                <h5 class="font-bold mt-2 text-energetic-yellow">胃火</h5>
+                                <p class="text-sm text-gray-600 mt-1">牙龈肿痛、口臭</p>
+                            </div>
+                            <div class="border-2 border-energetic-blue/50 rounded-lg p-4">
+                                <p class="text-4xl">💧</p>
+                                <h5 class="font-bold mt-2 text-energetic-blue">肾火 (虚火)</h5>
+                                <p class="text-sm text-gray-600 mt-1">潮热盗汗、腰膝酸软</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="shiqi">
+                <div class="text-center mb-8">
+                    <h3 class="text-3xl font-bold text-energetic-blue">第二章：解析“湿气重”——体内的“水”与“滞”</h3>
+                    <p class="mt-2 max-w-3xl mx-auto text-gray-600">“湿气重”指体内水液代谢失常，导致湿邪内停。其特点是重浊、黏滞，症状缠绵难愈。中医认为“脾主运化”，脾功能失调是内湿之源，这与现代医学中消化、代谢及肠道菌群的功能紧密相连。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h4 class="text-xl font-bold mb-4 flex items-center"><span class="text-2xl mr-3">🔬</span>现代科学视角：代谢与菌群</h4>
+                        <p class="text-gray-600 mb-4">“湿气重”与一系列现代健康问题相关，如代谢综合征、肥胖、慢性炎症和肠道菌群失调。体内多余的“湿”可被理解为代谢废物和水分的积聚，影响了正常的生理功能。</p>
+                        <div class="chart-container">
+                             <canvas id="shiqiBiomarkersChart"></canvas>
+                        </div>
+                        <p class="text-center text-sm text-gray-500 mt-2">图2：“湿气重”状态下相关健康指标关联示意图</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h4 class="text-xl font-bold mb-4 flex items-center"><span class="text-2xl mr-3">🌊</span>湿气的来源与演变</h4>
+                        <p class="text-gray-600 mb-6">湿气有内外之分，并常常与其他致病因素结合，演变成更复杂的证候。</p>
+                        <div class="space-y-6">
+                            <div class="flow-box border-energetic-blue p-4 rounded-lg">
+                                <h5 class="font-bold text-energetic-blue">外湿</h5>
+                                <p class="text-sm text-gray-600">环境潮湿、淋雨涉水等外部因素侵袭人体。</p>
+                            </div>
+                            <div class="flex justify-center">
+                                <div class="flow-line h-8"></div>
+                            </div>
+                            <div class="flow-box border-energetic-teal p-4 rounded-lg">
+                                <h5 class="font-bold text-energetic-teal">内湿</h5>
+                                <p class="text-sm text-gray-600">脾胃运化功能减弱，饮食不节，导致水湿内生。</p>
+                            </div>
+                            <div class="flex justify-center">
+                                <div class="flow-line h-8"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="flow-box border-blue-400 p-3 rounded-lg text-center">
+                                    <h5 class="font-bold text-blue-500">寒湿</h5>
+                                    <p class="text-xs text-gray-500">湿与寒结合</p>
+                                </div>
+                                <div class="flow-box border-red-400 p-3 rounded-lg text-center">
+                                    <h5 class="font-bold text-red-500">湿热</h5>
+                                    <p class="text-xs text-gray-500">湿与热结合</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="comparison">
+                <div class="text-center mb-8">
+                    <h3 class="text-3xl font-bold text-gray-700">第三章：双重视角下的对话</h3>
+                    <p class="mt-2 max-w-3xl mx-auto text-gray-600">将中医的宏观辨证与现代医学的微观分析相结合，可以更全面地理解“上火”与“湿气重”这两个复杂的生理状态。</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 sm:p-6 overflow-x-auto">
+                    <table class="w-full min-w-max text-left">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200">
+                                <th class="p-4 text-lg font-bold">概念</th>
+                                <th class="p-4 text-lg font-bold text-energetic-magenta">上火 (热证)</th>
+                                <th class="p-4 text-lg font-bold text-energetic-blue">湿气重 (湿证)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100">
+                                <td class="p-4 font-semibold align-top">中医理论核心</td>
+                                <td class="p-4 align-top">阳气过盛或阴液亏损，导致体内有“热”。</td>
+                                <td class="p-4 align-top">脾失健运，水液代谢障碍，导致“湿”邪停滞。</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="p-4 font-semibold align-top">典型症状</td>
+                                <td class="p-4 align-top">口干舌燥、咽痛、目赤、便秘、烦躁。</td>
+                                <td class="p-4 align-top">身体困重、疲倦、头昏、大便黏腻、舌苔厚腻。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold align-top">现代科学关联</td>
+                                <td class="p-4 align-top">
+                                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                        <li>全身性/局部炎症反应</li>
+                                        <li>免疫系统功能失调</li>
+                                        <li>氧化应激增强</li>
+                                        <li>神经内分泌紊乱</li>
+                                    </ul>
+                                </td>
+                                <td class="p-4 align-top">
+                                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                        <li>代谢综合征 (肥胖, 胰岛素抵抗)</li>
+                                        <li>消化功能紊乱</li>
+                                        <li>肠道菌群失调</li>
+                                        <li>慢性低度炎症</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="text-center mt-16 pt-8 border-t border-gray-200">
+            <p class="text-gray-600">本信息图基于《中医“上火”与“湿气重”的现代科学解析》报告生成。</p>
+            <p class="text-sm text-gray-500 mt-2">数据可视化旨在促进理解，不构成医疗建议。如有健康问题，请咨询专业医师。</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function wrapLabels(label, maxWidth) {
+            if (typeof label !== 'string') {
+                return label;
+            }
+            if (label.length <= maxWidth) {
+                return label;
+            }
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).trim().length > maxWidth) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            });
+            if (currentLine) {
+                lines.push(currentLine.trim());
+            }
+            return lines;
+        }
+
+        const sharedTooltipCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        const energeticColors = {
+            blue: 'rgba(0, 166, 251, 0.8)',
+            magenta: 'rgba(220, 0, 115, 0.8)',
+            yellow: 'rgba(251, 176, 59, 0.8)',
+            teal: 'rgba(0, 240, 181, 0.8)',
+            blueBorder: 'rgb(0, 166, 251)',
+            magentaBorder: 'rgb(220, 0, 115)',
+        };
+
+        const shanghuoCtx = document.getElementById('shanghuoBiomarkersChart').getContext('2d');
+        const shanghuoChart = new Chart(shanghuoCtx, {
+            type: 'bar',
+            data: {
+                labels: ['唾液S-IgA (免疫力)', 'TNF-α (促炎因子)', 'IL-10 (抗炎因子)'],
+                datasets: [{
+                    label: '正常状态',
+                    data: [100, 40, 80],
+                    backgroundColor: energeticColors.blue,
+                    borderColor: energeticColors.blueBorder,
+                    borderWidth: 1
+                }, {
+                    label: '“上火”状态',
+                    data: [60, 120, 50],
+                    backgroundColor: energeticColors.magenta,
+                    borderColor: energeticColors.magentaBorder,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                ...sharedTooltipCallback,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: '相对水平' }
+                    }
+                },
+                plugins: {
+                     ...sharedTooltipCallback.plugins,
+                    legend: { position: 'top' },
+                    title: { display: true, text: '“上火”时免疫与炎症因子变化', font: {size: 14} }
+                }
+            }
+        });
+
+        const shiqiCtx = document.getElementById('shiqiBiomarkersChart').getContext('2d');
+        const shiqiChart = new Chart(shiqiCtx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    '血脂 (甘油三酯)', 
+                    'C反应蛋白 (炎症)', 
+                    '肠道菌群失衡',
+                    ['身体困重', '疲劳感'], 
+                    '胰岛素抵抗风险'
+                ],
+                datasets: [{
+                    label: '“湿气重”倾向',
+                    data: [8, 9, 7, 9, 6],
+                    backgroundColor: 'rgba(0, 166, 251, 0.2)',
+                    borderColor: 'rgb(0, 166, 251)',
+                    pointBackgroundColor: 'rgb(0, 166, 251)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(0, 166, 251)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                ...sharedTooltipCallback,
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 10,
+                        pointLabels: {
+                            font: function(context) {
+                                let width = context.chart.width;
+                                let size = Math.round(width / 32);
+                                return {
+                                    size: Math.max(size, 10)
+                                };
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    ...sharedTooltipCallback.plugins,
+                    legend: { display: false },
+                    title: { display: true, text: '“湿气重”与代谢及炎症指标关联', font: {size: 14} }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
