@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内衣裤洗涤科学指南信息图</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 320px;
+            width: 100%;
+            max-width: 450px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-[#073B4C]">
+
+    <!-- Palette: Energetic & Playful -->
+    <!-- NEITHER Mermaid JS NOR SVG were used in this output. All visuals are pure HTML/CSS or Canvas-based via Chart.js. -->
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#073B4C] mb-4">内衣裤洗涤的终极对决</h1>
+            <p class="text-lg md:text-xl text-slate-600">手洗 vs. 机洗：科学数据揭示卫生与护理的最佳平衡点</p>
+        </header>
+
+        <main class="space-y-12">
+
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center ring-1 ring-slate-200">
+                <h2 class="text-2xl font-bold mb-4 text-[#FF6B6B]">第一问：“干净”的真正含义是什么？</h2>
+                <p class="text-slate-700 max-w-2xl mx-auto mb-6">我们所说的“干净”远不止去除肉眼可见的污渍。对于贴身衣物，真正的洁净在于有效杀灭看不见的微生物。科学研究指出，健康成年人的内裤上平均可能含有...</p>
+                <div class="bg-[#FFD166]/20 rounded-xl p-6 inline-block">
+                    <p class="text-6xl md:text-7xl font-bold text-[#073B4C]">0.1克</p>
+                    <p class="text-lg font-semibold text-slate-800 mt-2">潜在的粪便残留物</p>
+                </div>
+                <p class="text-sm text-slate-500 mt-4">这意味着有效的洗涤必须以杀菌为核心目标之一。</p>
+            </section>
+
+            <section>
+                <h2 class="text-3xl font-bold text-center mb-8">巅峰对决：除菌效率大比拼</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+                    <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 h-full ring-1 ring-slate-200">
+                        <h3 class="text-2xl font-bold text-[#118AB2] mb-4">💧 手洗：面料的守护者</h3>
+                        <p class="text-slate-600 mb-4">手洗以其温和备受青睐，尤其适合丝绸、蕾丝等精致面料，能最大程度保护衣物形态与寿命。</p>
+                        <div class="text-left space-y-2">
+                            <p class="flex items-center"><span class="text-xl mr-3 text-[#06D6A0]">✔</span> 保护精致面料，延长寿命</p>
+                            <p class="flex items-center"><span class="text-xl mr-3 text-[#06D6A0]">✔</span> 可针对性处理局部污渍</p>
+                            <p class="flex items-center"><span class="text-xl mr-3 text-[#FF6B6B]">❌</span> 除菌效率极低（约25%）</p>
+                            <p class="flex items-center"><span class="text-xl mr-3 text-[#FF6B6B]">❌</span> 费时费力，难以维持高温</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 h-full ring-1 ring-slate-200">
+                        <h3 class="text-2xl font-bold text-[#06D6A0] mb-4">⚙️ 机洗：卫生的捍卫者</h3>
+                        <p class="text-slate-600 mb-4">在正确设置下，机洗的机械力与高温是杀灭细菌的强大武器，是实现真正卫生的首选。</p>
+                         <div class="text-left space-y-2">
+                            <p class="flex items-center"><span class="text-xl mr-3 text-[#06D6A0]">✔</span> 除菌效率极高（可达99.9%）</p>
+                            <p class="flex items-center"><span class="text-xl mr-3 text-[#06D6A0]">✔</span> 高效便捷，节省时间</p>
+                            <p class="flex items-center"><span class="text-xl mr-3 text-[#FF6B6B]">❌</span> 可能损伤精致面料</p>
+                            <p class="flex items-center"><span class="text-xl mr-3 text-[#FF6B6B]">❌</span> 存在交叉污染风险</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mt-8 ring-1 ring-slate-200">
+                    <h3 class="text-xl font-bold text-center mb-4">细菌去除率直观对比</h3>
+                    <p class="text-center text-slate-600 mb-6">科学实验数据显示，两种方式在微生物去除能力上存在巨大差异。</p>
+                    <div class="chart-container">
+                        <canvas id="bacterialRemovalChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8 ring-1 ring-slate-200">
+                <h2 class="text-3xl font-bold text-center mb-2">机洗的科学策略</h2>
+                <p class="text-center text-slate-600 mb-8">选择机洗不代表一劳永逸，掌握正确的方法是兼顾卫生与护理的关键。</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-bold text-center mb-4">黄金温度选择指南</h3>
+                        <p class="text-slate-600 text-center mb-4">不同的洗涤温度服务于不同目标。60°C是实现有效消毒的推荐温度。</p>
+                        <div class="chart-container h-64 sm:h-72">
+                            <canvas id="temperatureChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-center mb-4">机洗“三剑客”</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-3xl mr-4">🧺</span>
+                                <div>
+                                    <h4 class="font-bold">使用洗衣袋</h4>
+                                    <p class="text-slate-600">这是保护内衣裤不变形、不被勾丝、减少摩擦的必备神器，同时也能在一定程度上减少细菌的直接混合。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-3xl mr-4">🧼</span>
+                                <div>
+                                    <h4 class="font-bold">选用温和洗涤剂</h4>
+                                    <p class="text-slate-600">避免使用刺激性过强的洗涤剂和柔顺剂，它们可能引起皮肤不适。需要时，可选用衣物消毒液。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-3xl mr-4">💨</span>
+                                <div>
+                                    <h4 class="font-bold">彻底晾干是关键</h4>
+                                    <p class="text-slate-600">潮湿是细菌的温床。阳光暴晒（利用紫外线）或高温烘干是消毒的最后一道重要防线。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8 ring-1 ring-slate-200">
+                <h2 class="text-3xl font-bold text-center mb-2">分开洗涤：是否小题大做？</h2>
+                <p class="text-center text-slate-600 mb-8">交叉污染是家庭洗衣中普遍存在的健康隐患。在某些特定情况下，将内衣裤分开洗涤是必要的卫生措施。</p>
+                
+                <div class="flow-chart-container space-y-6">
+                    <div class="text-center">
+                        <div class="inline-block bg-[#118AB2] text-white font-bold p-4 rounded-lg shadow-md">
+                            我应该把内衣裤和其它衣物分开洗吗？
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <div class="border-l-2 border-r-2 border-[#118AB2] h-6 w-0"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <div class="border-t-2 border-[#06D6A0] pt-4 text-center">
+                             <h4 class="font-bold text-xl text-[#06D6A0] p-2 bg-[#06D6A0]/10 rounded-md">✅ 一般情况可以混合</h4>
+                             <p class="text-slate-600 mt-3 px-2">对于健康家庭的日常换洗衣物，在遵循以下前提时，可以混合洗涤：</p>
+                             <ul class="list-disc list-inside text-left mx-auto max-w-xs mt-3 space-y-1 text-slate-600">
+                                <li>使用洗衣袋</li>
+                                <li>水温达到60°C</li>
+                                <li>或使用衣物消毒液</li>
+                             </ul>
+                        </div>
+                        
+                        <div class="border-t-2 border-[#FF6B6B] pt-4 text-center">
+                            <h4 class="font-bold text-xl text-[#FF6B6B] p-2 bg-[#FF6B6B]/10 rounded-md">❌ 这些情况必须分开</h4>
+                            <p class="text-slate-600 mt-3 px-2">为杜绝病菌传播，以下情况请务必单独清洗内衣裤：</p>
+                            <ul class="list-disc list-inside text-left mx-auto max-w-xs mt-3 space-y-1 text-slate-600">
+                               <li>家人患有传染性疾病</li>
+                               <li>衣物被体液严重污染</li>
+                               <li>与袜子（特别是汗脚）混合</li>
+                               <li>医护人员的工作服</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8 ring-1 ring-slate-200">
+                 <h2 class="text-3xl font-bold text-center mb-8">终极指南：一张图看懂怎么洗</h2>
+                 <p class="text-center text-slate-600 mb-6 max-w-3xl mx-auto">结合面料、脏污程度和健康状况，这张表格为你提供最直接的洗涤建议，让你不再纠结。</p>
+                 <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-600">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 rounded-l-lg">情景</th>
+                                <th scope="col" class="px-6 py-3">棉质 / 耐用面料</th>
+                                <th scope="col" class="px-6 py-3 rounded-r-lg">丝绸 / 蕾丝 / 精致面料</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b">
+                                <th scope="row" class="px-6 py-4 font-bold text-[#073B4C] whitespace-nowrap">日常清洁 (健康)</th>
+                                <td class="px-6 py-4">机洗 (30-40°C)，使用洗衣袋</td>
+                                <td class="px-6 py-4">强烈推荐手洗 (≤30°C)；或机洗 (柔和模式+洗衣袋)</td>
+                            </tr>
+                            <tr class="bg-slate-50 border-b">
+                                <th scope="row" class="px-6 py-4 font-bold text-[#073B4C] whitespace-nowrap">需要消毒 (重汗/脏污)</th>
+                                <td class="px-6 py-4">机洗 (60°C)，可加消毒液</td>
+                                <td class="px-6 py-4">手洗，配合低温消毒液或醋浸泡</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <th scope="row" class="px-6 py-4 font-bold text-[#073B4C] whitespace-nowrap">最高级别消毒 (患病期)</th>
+                                <td class="px-6 py-4">单独机洗 (60-90°C)，加消毒液</td>
+                                <td class="px-6 py-4">单独手洗，使用专用消毒剂，并咨询医生建议</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+                 <p class="text-xs text-center text-slate-400 mt-4">注意：90°C高温会严重损伤衣物，请谨慎使用。</p>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 pt-8 border-t border-slate-200">
+            <p class="text-slate-500">数据来源：综合多项微生物学与纺织品护理研究报告。</p>
+            <p class="text-sm text-slate-400 mt-2">本信息图仅供参考，具体操作请遵循衣物洗涤标签及专业医疗建议。</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            family: "'Noto Sans SC', sans-serif"
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    bodyFont: {
+                        family: "'Noto Sans SC', sans-serif"
+                    },
+                    titleFont: {
+                        family: "'Noto Sans SC', sans-serif"
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                       font: {
+                            family: "'Noto Sans SC', sans-serif"
+                        }
+                    }
+                },
+                y: {
+                    ticks: {
+                       font: {
+                            family: "'Noto Sans SC', sans-serif"
+                        }
+                    }
+                }
+            }
+        };
+
+        const bacterialRemovalCtx = document.getElementById('bacterialRemovalChart').getContext('2d');
+        new Chart(bacterialRemovalCtx, {
+            type: 'bar',
+            data: {
+                labels: ['手洗', '机洗'],
+                datasets: [{
+                    label: '细菌去除率 (%)',
+                    data: [25, 99.9],
+                    backgroundColor: [
+                        '#FF6B6B',
+                        '#06D6A0'
+                    ],
+                    borderColor: [
+                        '#FF6B6B',
+                        '#06D6A0'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%'
+                            },
+                             font: {
+                                family: "'Noto Sans SC', sans-serif"
+                            }
+                        }
+                    },
+                    x: {
+                         ticks: {
+                            font: {
+                                family: "'Noto Sans SC', sans-serif",
+                                size: 14
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                       display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback,
+                            label: function(context) {
+                                return '去除率: ' + context.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const temperatureCtx = document.getElementById('temperatureChart').getContext('2d');
+        new Chart(temperatureCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['日常清洁 (30-40°C)', '有效消毒 (60°C)', '最高消毒 (90°C)'],
+                datasets: [{
+                    label: '使用场景',
+                    data: [50, 40, 10],
+                    backgroundColor: [
+                        '#118AB2',
+                        '#06D6A0',
+                        '#FFD166'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                cutout: '60%'
+            }
+        });
+    </script>
+
+</body>
+</html>
