@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信息图：限制性饮食的科学与误区——以西瓜为例</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./static/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="./static/css2.css " rel="stylesheet">
+  <!--
+  Infographic Narrative Plan:
+  1.  Introduction: Hook with the common question "Can watermelon lead to weight loss?" to draw the user in.
+  2.  The Science of Weight Loss: Explain the core principle of calorie deficit and the difference between true fat loss and temporary water/muscle loss.
+  3.  Watermelon Nutritional Profile: Deconstruct the watermelon using a donut chart and key stat callouts to show its composition (high water, low everything else).
+  4.  Comparative Analysis: Use a grouped bar chart and a data table to directly compare watermelon against staple foods (rice, steamed buns), highlighting the severe nutritional gap.
+  5.  Risks of Restrictive Diets: Visualize the "yo-yo" effect with an HTML/CSS flowchart and list the critical health risks.
+  6.  Sustainable Approach: Provide actionable advice on how to correctly incorporate watermelon into a balanced diet.
+  7.  Conclusion & CTA: Summarize the findings and strongly recommend consulting professionals, providing a path forward.
+
+  Visualization Selection Plan:
+  -   Key Stat (Calorie Deficit): Goal=Inform, Method=Large HTML text, Justification=High impact for a single data point. NO SVG.
+  -   Watermelon Composition: Goal=Compare, Method=Chart.js Donut Chart (Canvas), Justification=Excellent for showing parts of a whole. NO SVG.
+  -   Watermelon vs. Staples Comparison: Goal=Compare, Method=Chart.js Grouped Bar Chart (Canvas), Justification=Best for direct comparison of multiple metrics across multiple items. NO SVG.
+  -   Nutrient Comparison Table: Goal=Organize, Method=HTML Table with Tailwind, Justification=Provides detailed, precise data for reference. NO SVG.
+  -   Fad Diet Cycle: Goal=Organize, Method=HTML/CSS Flowchart, Justification=Clearly shows a process flow without needing images or complex scripts. NO SVG, NO MERMAID JS.
+  -   Health Risks: Goal=Organize, Method=HTML list with Unicode icons, Justification=Clean, scannable, and visually organized information. NO SVG.
+  -   Healthy Pairings: Goal=Organize, Method=HTML/CSS cards, Justification=Visually separates actionable tips. NO SVG.
+
+  Color Palette Selection: "Energetic & Playful" (#00A6A6, #7ED957, #F2E1AC, #F2B705, #F28705).
+
+  Confirmation: NEITHER Mermaid JS NOR SVG were used in this output. All visuals are rendered using Chart.js (Canvas) or styled HTML/CSS.
+  -->
+  <style>
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background-color: #f8fafc;
+    }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 320px;
+      max-height: 400px;
+    }
+    @media (min-width: 768px) {
+      .chart-container {
+        height: 400px;
+      }
+    }
+    .flowchart-step {
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .flowchart-arrow {
+      position: relative;
+      font-size: 2.5rem;
+      line-height: 1;
+      color: #F28705;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-gray-800">
+
+<div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+  <header class="text-center py-8">
+    <h1 class="text-4xl md:text-6xl font-bold" style="color: #00A6A6;">吃西瓜能减肥吗？</h1>
+    <p class="mt-4 text-lg md:text-xl text-gray-600">一份关于限制性饮食的科学审视与深度解析</p>
+  </header>
+
+  <main class="space-y-12">
+
+    <section id="science" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+      <h2 class="text-3xl font-bold mb-4 text-center" style="color: #00A6A6;">减重的核心科学：热量赤字 ≠ 盲目节食</h2>
+      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">所有有效减重的基石是能量平衡原理，即“摄入热量”必须小于“消耗热量”。但这并不意味着所有热量来源都是平等的。健康的减重关注的是营养的质量，而不仅仅是数量。</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div class="text-center bg-green-50 rounded-xl p-6">
+          <h3 class="text-2xl font-semibold" style="color: #7ED957;">可持续的热量赤字</h3>
+          <p class="text-6xl lg:text-8xl font-bold my-4" style="color: #00A6A6;">500-750</p>
+          <p class="text-gray-600">千卡/天</p>
+          <p class="mt-4 text-gray-700">这是科学推荐的安全范围，通常能带来每周0.5-1公斤的健康体重下降，主要减少的是脂肪，而非宝贵的肌肉和水分。</p>
+        </div>
+        <div class="text-center bg-amber-50 rounded-xl p-6">
+          <h3 class="text-2xl font-semibold" style="color: #F2B705;">快速减重的真相</h3>
+          <p class="text-4xl font-bold my-2" style="color: #F28705;">水分 + 肌肉流失</p>
+          <p class="text-xl text-gray-600 font-medium my-2">≠</p>
+          <p class="text-4xl font-bold my-2" style="color: #7ED957;">脂肪减少</p>
+          <p class="mt-4 text-gray-700">极端节食导致的体重速降，大部分是身体水分和肌肉的损失。这会降低新陈代谢，为日后的体重反弹埋下伏笔。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="watermelon-analysis" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+      <h2 class="text-3xl font-bold mb-4 text-center" style="color: #00A6A6;">解构西瓜：它真的是减肥“神器”吗？</h2>
+      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">西瓜因其低热量和高含水量而备受青睐。但作为主食替代品，它的营养构成存在严重缺陷。了解其营养真相是评估其减肥潜力的第一步。</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div class="chart-container">
+          <canvas id="watermelonCompositionChart"></canvas>
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+            <span class="text-4xl font-bold" style="color: #00A6A6;">~30</span>
+            <span class="text-sm text-gray-600">千卡 / 100克</span>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-sky-50 p-4 rounded-lg">
+            <p class="font-bold text-lg" style="color: #00A6A6;">优点：富含水分和微量元素</p>
+            <p class="text-gray-700">超过90%是水分，提供维生素C、维生素A和强大的抗氧化剂番茄红素。</p>
+          </div>
+          <div class="bg-red-50 p-4 rounded-lg">
+            <p class="font-bold text-lg" style="color: #F28705;">缺点：营养极度不均衡</p>
+            <p class="text-gray-700">几乎不含蛋白质和脂肪，这两种宏量营养素对饱腹感和肌肉维持至关重要。</p>
+          </div>
+          <div class="bg-yellow-50 p-4 rounded-lg">
+            <p class="font-bold text-lg" style="color: #F2B705;">警告：高升糖指数 (GI: 72-76)</p>
+            <p class="text-gray-700">大量食用可能导致血糖快速飙升后骤降，引发饥饿感和能量波动。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="comparison" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+      <h2 class="text-3xl font-bold mb-4 text-center" style="color: #00A6A6;">营养大比拼：西瓜 vs. 传统主食</h2>
+      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">用西瓜完全替代米饭、馒头等主食，会造成巨大的营养鸿沟。下面的图表和数据清晰地揭示了为什么这种替代是不可持续且有害的。</p>
+      <div class="w-full overflow-x-auto">
+        <div class="chart-container min-w-[600px] md:min-w-0">
+          <canvas id="foodComparisonChart"></canvas>
+        </div>
+      </div>
+      <div class="mt-8 flow-root">
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead>
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">营养成分 (每100克)</th>
+                <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">西瓜</th>
+                <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">白米饭 (熟)</th>
+                <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">馒头</th>
+              </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">热量 (千卡)</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~30</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~130</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~280</td>
+              </tr>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">蛋白质 (克)</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-red-500 font-bold text-center">~0.6</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~2.9</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~7.0</td>
+              </tr>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">总脂肪 (克)</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-red-500 font-bold text-center">~0.2</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~0.4</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~0.6-6.5</td>
+              </tr>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">碳水化合物 (克)</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~7.6</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~28</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">~60</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="risks" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+      <h2 class="text-3xl font-bold mb-4 text-center" style="color: #F28705;">“西瓜饮食法”的恶性循环与健康风险</h2>
+      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">所谓的“西瓜排毒”或“西瓜代餐”不仅缺乏科学依据，更可能将您带入一个有害的循环，损害您的长期健康和新陈代谢。</p>
+
+      <div class="relative p-4 md:p-8 border-2 border-dashed border-amber-500 rounded-xl">
+        <h3 class="text-2xl font-semibold mb-6 text-center" style="color: #F28705;">时尚饮食的溜溜球效应</h3>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 items-center">
+          <div class="flowchart-step bg-orange-100 p-2 rounded-lg" style="color: #F28705;">极端限制 (只吃西瓜)</div>
+          <div class="flowchart-arrow text-center">➡️</div>
+          <div class="flowchart-step bg-orange-100 p-2 rounded-lg" style="color: #F28705;">体重速降 (水分/肌肉)</div>
+          <div class="hidden md:block flowchart-arrow text-center">➡️</div>
+          <div class="col-span-2 md:col-span-1 flowchart-step bg-orange-100 p-2 rounded-lg" style="color: #F28705;">疲劳&营养渴望</div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-5">
+          <div class="col-span-1 md:col-start-5 flowchart-arrow text-center transform -rotate-90 md:rotate-0">⬇️</div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 items-center mt-4 md:mt-0">
+          <div class="col-span-2 md:col-span-1 flowchart-step bg-orange-100 p-2 rounded-lg order-last md:order-first" style="color: #F28705;">寻求新的快速方案</div>
+          <div class="flowchart-arrow text-center order-3 md:order-2 transform rotate-180 md:rotate-0">⬅️</div>
+          <div class="flowchart-step bg-orange-100 p-2 rounded-lg order-2 md:order-3" style="color: #F28705;">体重反弹 (+更多脂肪)</div>
+          <div class="hidden md:block flowchart-arrow text-center order-last md:order-4">⬅️</div>
+          <div class="flowchart-step bg-orange-100 p-2 rounded-lg order-first md:order-last" style="color: #F28705;">停止节食/暴食</div>
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-2xl font-semibold mb-6 text-center" style="color: #F28705;">主要健康风险</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-red-50 p-6 rounded-lg text-center">
+            <p class="text-4xl mb-2">📉</p>
+            <h4 class="font-bold text-lg text-red-600">肌肉流失</h4>
+            <p class="text-sm text-gray-600">蛋白质摄入严重不足，身体会分解肌肉获取能量，降低新陈代谢率。</p>
+          </div>
+          <div class="bg-yellow-50 p-6 rounded-lg text-center">
+            <p class="text-4xl mb-2">😵</p>
+            <h4 class="font-bold text-lg text-yellow-600">营养缺乏</h4>
+            <p class="text-sm text-gray-600">缺乏必需脂肪酸、维生素B12、铁、钙等关键营养素。</p>
+          </div>
+          <div class="bg-blue-50 p-6 rounded-lg text-center">
+            <p class="text-4xl mb-2">⚡️</p>
+            <h4 class="font-bold text-lg text-blue-600">血糖波动</h4>
+            <p class="text-sm text-gray-600">高GI导致血糖大起大落，引发疲劳、易怒和更强烈的饥饿感。</p>
+          </div>
+          <div class="bg-purple-50 p-6 rounded-lg text-center">
+            <p class="text-4xl mb-2">🧠</p>
+            <h4 class="font-bold text-lg text-purple-600">心理健康</h4>
+            <p class="text-sm text-gray-600">可能诱发饮食失调，造成与食物的不健康关系，引发焦虑和抑郁。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sustainable-approach" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+      <h2 class="text-3xl font-bold mb-4 text-center" style="color: #7ED957;">明智之选：如何将西瓜融入健康饮食</h2>
+      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">西瓜本身是健康食品，关键在于如何食用。放弃极端方法，将它作为均衡饮食的一部分，才能真正享受它的益处而无害。</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="border border-green-200 bg-green-50 rounded-xl p-6 text-center">
+          <p class="text-5xl mb-4">🍉 + 🧀</p>
+          <h3 class="text-xl font-semibold mb-2" style="color: #00A6A6;">搭配蛋白质与健康脂肪</h3>
+          <p class="text-gray-700">将西瓜与一小份坚果、奶酪、希腊酸奶或烤鸡肉搭配。蛋白质和脂肪能减缓糖分吸收，稳定血糖，并显著增强饱腹感。</p>
+        </div>
+        <div class="border border-green-200 bg-green-50 rounded-xl p-6 text-center">
+          <p class="text-5xl mb-4">🥗</p>
+          <h3 class="text-xl font-semibold mb-2" style="color: #00A6A6;">创意入馔</h3>
+          <p class="text-gray-700">将西瓜块加入沙拉中（例如搭配菲达奶酪和薄荷），或制作成清爽的莎莎酱。这能增加风味和水分，而不是作为单一主食。</p>
+        </div>
+        <div class="border border-green-200 bg-green-50 rounded-xl p-6 text-center">
+          <p class="text-5xl mb-4">✋</p>
+          <h3 class="text-xl font-semibold mb-2" style="color: #00A6A6;">控制份量</h3>
+          <p class="text-gray-700">即使是健康食品，也要注意份量。将西瓜视为水果零食或甜点，而不是无限量食用的主餐。一杯（约150克）是比较合理的份量。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center py-10 mt-8 border-t-2 border-dashed" style="border-color: #00A6A6;">
+    <h2 class="text-3xl font-bold mb-4" style="color: #00A6A6;">最终结论：没有捷径，只有科学</h2>
+    <p class="text-gray-700 max-w-4xl mx-auto mb-6">用西瓜替代主食来减肥是一种不可持续且有害的时尚饮食。真正的、持久的体重管理来自于均衡的营养、规律的体育活动和健康的生活习惯。这是一个长期的过程，而非速成的戏法。</p>
+    <a href="https://www.choosemyplate.gov/" target="_blank" class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300">
+      寻求专业建议，开始您的健康之旅
+    </a>
+    <p class="text-sm text-gray-500 mt-4">在开始任何重大饮食改变前，请务必咨询注册营养师或医生。</p>
+  </footer>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    const vibrantPalette = ['#00A6A6', '#7ED957', '#F2E1AC', '#F2B705', '#F28705'];
+    const textColor = '#374151';
+
+    const wrapLabel = (str, maxWidth = 16) => {
+      if (str.length <= maxWidth) {
+        return str;
+      }
+      const words = str.split(' ');
+      let lines = [];
+      let currentLine = words[0];
+
+      for (let i = 1; i < words.length; i++) {
+        if ((currentLine + " " + words[i]).length > maxWidth) {
+          lines.push(currentLine);
+          currentLine = words[i];
+        } else {
+          currentLine += " " + words[i];
+        }
+      }
+      lines.push(currentLine);
+      return lines;
+    };
+
+    const tooltipTitleCallback = (tooltipItems) => {
+      const item = tooltipItems[0];
+      let label = item.chart.data.labels[item.dataIndex];
+      if (Array.isArray(label)) {
+        return label.join(' ');
+      }
+      return label;
+    };
+
+    const defaultChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor,
+            font: {
+              size: 14
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            title: tooltipTitleCallback
+          }
+        }
+      },
+      scales: {
+        y: {
+          ticks: { color: textColor },
+          grid: { color: '#e5e7eb' }
+        },
+        x: {
+          ticks: { color: textColor },
+          grid: { display: false }
+        }
+      }
+    };
+
+    const watermelonCompositionCtx = document.getElementById('watermelonCompositionChart');
+    if(watermelonCompositionCtx) {
+      new Chart(watermelonCompositionCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['水分', '碳水化合物 (糖)', '其他 (蛋白质, 纤维等)'],
+          datasets: [{
+            label: '西瓜成分',
+            data: [92, 7.5, 0.5],
+            backgroundColor: [vibrantPalette[0], vibrantPalette[3], vibrantPalette[2]],
+            borderColor: '#ffffff',
+            borderWidth: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '70%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: textColor,
+                font: { size: 12 }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                title: tooltipTitleCallback
+              }
+            }
+          }
+        }
+      });
+    }
+
+    const foodComparisonCtx = document.getElementById('foodComparisonChart');
+    if(foodComparisonCtx){
+      new Chart(foodComparisonCtx, {
+        type: 'bar',
+        data: {
+          labels: ['热量 (千卡)', wrapLabel('蛋白质 (克)'), wrapLabel('脂肪 (克)'), wrapLabel('碳水化合物 (克)')],
+          datasets: [
+            {
+              label: '西瓜',
+              data: [30, 0.6, 0.2, 7.6],
+              backgroundColor: vibrantPalette[0],
+              borderColor: vibrantPalette[0],
+              borderWidth: 1
+            },
+            {
+              label: '白米饭 (熟)',
+              data: [130, 2.9, 0.4, 28],
+              backgroundColor: vibrantPalette[1],
+              borderColor: vibrantPalette[1],
+              borderWidth: 1
+            },
+            {
+              label: '馒头',
+              data: [280, 7.0, 3.5, 60],
+              backgroundColor: vibrantPalette[4],
+              borderColor: vibrantPalette[4],
+              borderWidth: 1
+            }
+          ]
+        },
+        options: defaultChartOptions
+      });
+    }
+  });
+</script>
+</body>
+</html>

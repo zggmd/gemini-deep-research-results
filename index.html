@@ -80,7 +80,6 @@
 </main>
 
 <script>
-  const urlPrefix = 'https://encode.zggmd.com/gemini-deep-research-results/';
   // --- 配置您的文章列表 ---
   // 在这个数组中添加或修改您的文章
   // name: 文章的标题
@@ -102,6 +101,10 @@
       name: "玻璃是固态还是液体?",
       url: "GlassSolidOrLiquid"
     },
+    {
+      name: "吃西瓜能减肥吗?",
+      url: "WatermelonWeightLossStudy"
+    },
   ];
 
   // --- 渲染函数 ---
@@ -117,7 +120,7 @@
      // 将所有链接HTML拼接成一个字符串
     articleListContainer.innerHTML = articles.map(article => {
       // 使用模板字符串创建每个文章的链接
-      return `<a href="${urlPrefix}${article.url}.html" target="_blank" rel="noopener noreferrer">${article.name}</a>`;
+      return `<a href="./${article.url}.html" target="_blank" rel="noopener noreferrer">${article.name}</a>`;
     }).join('');
   });
 </script>
