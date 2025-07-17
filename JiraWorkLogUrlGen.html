@@ -102,6 +102,11 @@
       color: green;
       font-weight: bold;
       text-align: center;
+      transition: opacity 0.3s ease;
+    }
+
+    #copyNotice.hidden {
+      opacity: 0;
     }
   </style>
 </head>
@@ -127,7 +132,7 @@
   <button onclick="generateUrl()">生成链接并复制</button>
 
   <a id="resultLink" href="#" target="_blank"></a>
-  <div id="copyNotice"></div>
+  <div id="copyNotice" class="hidden"></div>
 </div>
 
 <script>
@@ -148,23 +153,30 @@
     return date.toISOString().split("T")[0];
   }
 
-  window.onload = () => {
-    const storedAuthor = localStorage.getItem("jiraAuthor");
-    if (storedAuthor) {
-      document.getElementById("authorInput").value = storedAuthor;
-    }
-    const { start, end } = getCurrentWeekRange();
-    document.getElementById("startDateInput").placeholder = start;
-    document.getElementById("endDateInput").placeholder = end;
-  };
+  function showNotice(text) {
+    const notice = document.getElementById("copyNotice");
+    notice.textContent = text;
+    notice.classList.remove("hidden");
+    setTimeout(() => {
+      notice.classList.add("hidden");
+    }, 4000); // 4秒后隐藏
+  }
 
-  function generateUrl() {
+  function copyToClipboard(text, auto = false) {
+    navigator.clipboard.writeText(text).then(() => {
+      showNotice(auto ? "✅ 已自动生成 URL（已复制）" : "✅ 链接已复制到剪贴板！");
+    }).catch(err => {
+      showNotice("❌ 复制失败，请手动复制链接。");
+    });
+  }
+
+  function generateUrl(autoRun = false) {
     const author = document.getElementById("authorInput").value.trim();
     const startDate = document.getElementById("startDateInput").value || document.getElementById("startDateInput").placeholder;
     const endDate = document.getElementById("endDateInput").value || document.getElementById("endDateInput").placeholder;
 
     if (!author) {
-      alert("请填写 worklogAuthor");
+      if (!autoRun) alert("请填写 worklogAuthor");
       return;
     }
 
@@ -178,20 +190,22 @@
     link.href = fullUrl;
     link.textContent = fullUrl;
 
-    copyToClipboard(fullUrl);
+    copyToClipboard(fullUrl, autoRun);
   }
 
-  function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      const notice = document.getElementById("copyNotice");
-      notice.textContent = "✅ 链接已复制到剪贴板！";
-      setTimeout(() => {
-        notice.textContent = "";
-      }, 3000);
-    }).catch(err => {
-      document.getElementById("copyNotice").textContent = "❌ 复制失败，请手动复制链接。";
-    });
-  }
+  window.onload = () => {
+    const storedAuthor = localStorage.getItem("jiraAuthor");
+    const { start, end } = getCurrentWeekRange();
+
+    document.getElementById("startDateInput").placeholder = start;
+    document.getElementById("endDateInput").placeholder = end;
+
+    if (storedAuthor) {
+      document.getElementById("authorInput").value = storedAuthor;
+      // 自动执行
+      generateUrl(true);
+    }
+  };
 </script>
 </body>
 </html>
