@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>JIRA 周报链接生成器</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 2rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+    }
+    a {
+      display: block;
+      margin-top: 2rem;
+      word-break: break-all;
+    }
+    #copyNotice {
+      color: green;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<h1>JIRA 周报链接生成器</h1>
+
+<label>
+  worklogAuthor（如 songshangzhi）：
+  <input type="text" id="authorInput" placeholder="输入你的 Jira 用户名">
+</label>
+
+<label>
+  开始日期（可选）：
+  <input type="date" id="startDateInput">
+</label>
+
+<label>
+  结束日期（可选）：
+  <input type="date" id="endDateInput">
+</label>
+
+<button onclick="generateUrl()">生成链接并复制</button>
+
+<a id="resultLink" href="#" target="_blank"></a>
+<div id="copyNotice"></div>
+
+<script>
+  function getCurrentWeekRange() {
+    const today = new Date();
+    const day = today.getDay() || 7; // 周日为 0，调整为 7
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - day + 1);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    return {
+      start: formatDate(monday),
+      end: formatDate(sunday),
+    };
+  }
+
+  function formatDate(date) {
+    return date.toISOString().split("T")[0];
+  }
+
+  window.onload = () => {
+    const storedAuthor = localStorage.getItem("jiraAuthor");
+    if (storedAuthor) {
+      document.getElementById("authorInput").value = storedAuthor;
+    }
+    const { start, end } = getCurrentWeekRange();
+    document.getElementById("startDateInput").placeholder = start;
+    document.getElementById("endDateInput").placeholder = end;
+  };
+
+  function generateUrl() {
+    const author = document.getElementById("authorInput").value.trim();
+    const startDate = document.getElementById("startDateInput").value || document.getElementById("startDateInput").placeholder;
+    const endDate = document.getElementById("endDateInput").value || document.getElementById("endDateInput").placeholder;
+
+    if (!author) {
+      alert("请填写 worklogAuthor");
+      return;
+    }
+
+    localStorage.setItem("jiraAuthor", author);
+
+    const baseUrl = "https://jira-tenxcloud.21vianet.com/issues/";
+    const query = `jql=worklogAuthor = ${author} AND worklogDate >= ${startDate} AND worklogDate <= ${endDate} ORDER BY updatedDate DESC`;
+    const fullUrl = `${baseUrl}?${encodeURI(query)}`;
+
+    const link = document.getElementById("resultLink");
+    link.href = fullUrl;
+    link.textContent = fullUrl;
+
+    copyToClipboard(fullUrl);
+  }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      document.getElementById("copyNotice").textContent = "✅ 链接已复制到剪贴板！";
+      setTimeout(() => {
+        document.getElementById("copyNotice").textContent = "";
+      }, 3000);
+    }).catch(err => {
+      console.error("复制失败:", err);
+      document.getElementById("copyNotice").textContent = "❌ 复制失败，请手动复制链接。";
+    });
+  }
+</script>
+</body>
+</html>
